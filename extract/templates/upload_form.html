@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% block extrahead %}
+
+{% endblock %}
+	
+{% block title %} Ste-Gertrude | Mise à jour donnés {% endblock %}
+
+{% block content %}
+	<form action="{% url "extract:maj_script" %}" method="post" enctype="multipart/form-data">
+		{% csrf_token %}	
+		<div class="row">
+			<div class="col-sm-6">
+				<input class="search-box" type="file" title="Upload excel file" name="excel_file" required="required">
+			</div>
+			<div class='col-sm-2'>
+				<input type="submit" value="Upload">
+			</div>
+		</div>
+	</form>
+	
+	<div class="row">
+		<div class="col">
+			
+		</div>
+	</div>
+	{% if error_message_list %}
+		<p>
+		{% for message in error_message_list %}
+			<div class="row text-danger">
+				{{ message }}
+			</div>
+		{% endfor %}
+		</p>
+			<div class="row">
+				<p>Les étudiants pour lesquels il manque certaines informations ne sont pas inserés dans la base de donnée<br>
+				   Valider que toutes les infos sont présentes aux lignes indiquées et réessayer</p>
+			</div>
+	{% endif %}
+
+{% endblock %}

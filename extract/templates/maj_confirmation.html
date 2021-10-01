@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% block extrahead %}
+
+{% endblock %}
+	
+{% block title %} Ste-Gertrude | Mise à jour donnés {% endblock %}
+
+{% block content %}
+	{% for k, data in excel_dic.items %}
+		{% if k != 1 %}
+		    {% for v in data %}
+		        {{ v }}&nbsp;&nbsp;
+		    {% endfor %}
+		{% endif %}
+	    <br>
+   {% endfor %}
+{% endblock %}

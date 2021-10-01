@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+
+
+	
+
+
+{% block title %} Confirmation des informations {% endblock %}
+
+{% block title2 %} 
+	
+{% endblock %}
+
+{% block extrahead %}
+	
+{% endblock %}
+{% block content %}
+	<div class="container general">
+		
+		<div class="row">
+		    <div class="col-sm-6">
+		      <h4>Information sur le cas</h4>
+		    </div>
+		</div>
+		
+
+		
+			{{ child_first_name }} {{ child_last_name }}
+		
+	</div>
+			
+{% endblock %}

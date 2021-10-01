@@ -1,0 +1,306 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+
+{% block title %} Ste-Gertrude | Confirmation des informations {% endblock %}
+
+{% block extrahead %}
+	<link rel="stylesheet" type="text/css" href="{% static 'extract/css/base.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'extract/css/add_remove_round_buttons.css' %}">
+	<script src="{% static 'extract/js/add_remove_field.js' %}"> </script> 
+{% endblock %}
+
+{% block content %}
+	<div class="container general gap-3">
+		
+		<div class="row">
+		    <div class="col-sm-6">
+		      <h4>Information sur le cas</h4>
+		    </div>
+		</div>
+		
+	
+		<div class='row'>
+			<div class='col-sm-6'>
+				<p>Élève test positif</p>
+			</div>
+		</div>
+		
+		<div class='row'>
+			<div class='col-sm-6'>
+				<table class="table bg-light border">
+					<tr><td>Prénom :</td><td>{{student_info.prénom}}</td></tr>
+					<tr><td>Nom :</td><td>{{student_info.nom}}</td></tr>
+					<tr><td>Date de naissance :</td><td>{{student_info.dob}}</td></tr>
+					<tr><td>Téléphone :</td><td>{{student_info.tel}}</td></tr>
+					<tr><td>Groupe :</td><td>{{student_info.groupe}}</td></tr>
+					
+				</table>
+			</div>
+		</div>
+	
+		<div class='row'>
+			<div class='col-sm-6'>
+				<p>Frère et soeur</p>
+			</div>
+		</div>
+		
+		<div class='row'>
+			<div class='col-sm-6'>
+				<table class="table bg-light border text-center">
+				<thead>
+						<th>Prénom</th>
+						<th>Nom</th>
+						<th>Groupe</th>
+					</thead>
+					{% if sibblings_list %}
+						{% for row in sibblings_list %}
+							<tr>
+								<td>{{row.prénom}}</td>
+								<td>{{row.nom}}</td>
+								<td>{{row.groupe}}</td>
+							</tr>
+						{% endfor %}
+					{% else %}
+						<tr>
+							<td>N/A</td>
+							<td>N/A</td>
+							<td>N/A</td>
+						</tr>
+					{% endif %}
+				</table>
+			</div>
+		</div>
+		
+		
+		<form action={% url 'extract:generate_excel' %} method="post">
+				{% csrf_token %}
+				
+			<input type="hidden" name="child_first_name" value="{{student_info.prénom}}"/>
+			<input type="hidden" name="child_last_name" value="{{student_info.nom}}"/>
+			<input type="hidden" name="child_groupe" value="{{student_info.groupe}}"/>
+			<input type="hidden" name="child_dob" value="{{student_info.dob}}"/>
+			<input type="hidden" name="child_phone" value="{{student_info.tel}}"/>
+			<input type="hidden" name="number_of_sibblings" value="{{fratterie_nombre}}"/>
+			
+			{% if fratterie_nombre >= 3 %}
+				<input type="hidden" name="sibbling_1" value= "{{sibblings_list.0}}"/>
+				<input type="hidden" name="sibbling_2" value= "{{sibblings_list.1}}"/>
+				<input type="hidden" name="sibbling_3" value= "{{sibblings_list.2}}"/>
+			{% elif fratterie_nombre == 2 %}
+				<input type="hidden" name="sibbling_1" value= "{{sibblings_list.0}}"/>
+				<input type="hidden" name="sibbling_2" value= "{{sibblings_list.1}}"/>
+				<input type="hidden" name="sibbling_3" value= "Pas de frère / soeur # 3"/>
+			{% elif fratterie_nombre == 1 %}
+				<input type="hidden" name="sibbling_1" value= "{{sibblings_list.0}}"/>
+				<input type="hidden" name="sibbling_2" value= "Pas de frère / soeur # 2"/>
+				<input type="hidden" name="sibbling_3" value= "Pas de frère / soeur # 3"/>
+			{% else %}
+			    <input type="hidden" name="sibbling_1" value= "Pas de frère / soeur # 1"/>
+				<input type="hidden" name="sibbling_2" value= "Pas de frère / soeur # 2"/>
+				<input type="hidden" name="sibbling_3" value= "Pas de frère / soeur # 3"/>
+			{% endif %}
+				
+			<div class="row">
+				<label for="apparition_symptômes" class="col-sm-3 col-form-label">Date d'apparition des symptômes</label>
+			    <div class="col-sm-3">
+			      <input type="date" class="form-control bg-light" id="apparition_symptômes" name="apparition_symptômes" value={{t0}}>
+			      	
+			      
+			    </div>
+			</div>
+			
+			<div class='row'>
+				<div class='col-sm-6'>
+					<label for="symptom_list" class="form-label">Symptomes</label>
+					
+					<select class="form-select bg-light border" id="symptom_list" name="symptom_list" multiple aria-label="multiple select example" size='13' multiple>
+						{% for sympt in symptoms_list %}
+							<option value="{{ sympt }}">{{ sympt }}</option>
+						{% endfor %}
+					</select>
+					
+				</div>
+			</div>
+			
+			<div class="row">
+				<label for="passation_test" class="col-sm-3 col-form-label">Date de passation du test</label>
+			    <div class="col-sm-3">
+			      <input type="date" class="form-control bg-light" id="passation_test" name="passation_test" value={{t0}}>
+			    </div>
+			</div>
+			
+			<div class="row">
+			    <div class="col-sm-6 text-center">
+			      <p>Date des 3 derniers jours de fréquentation du milieu</p>
+			    </div>
+			</div>
+			
+			<div class="row">
+				<label for="date_1" class="col-sm-3 col-form-label">Date jour 1</label>
+			    <div class="col-sm-3">
+			      <input type="date" class="form-control bg-light" id="date_1" name="date_1" value={{t3}}>
+			    </div>
+			</div>
+			
+			<div class="row">
+				<label for="date_2" class="col-sm-3 col-form-label">Date jour 2</label>
+			    <div class="col-sm-3">
+			      <input type="date" class="form-control bg-light" id="date_2" name="date_2" value={{t2}}>
+			    </div>
+			</div>
+			
+			<div class="row">
+				<label for="date_3" class="col-sm-3 col-form-label">Date jour 3</label>
+			    <div class="col-sm-3">
+			      <input type="date" class="form-control bg-light" id="date_3" name="date_3" value={{t1}}>
+			    </div>
+			</div>
+			<div class="row">
+			    <div class="col-sm-6">
+			      <h4>Situation dans le milieu</h4>
+			    </div>
+			</div>
+			
+			<div class="row">
+				
+				<label for="diner" class="col-sm-3 col-form-label">Où le cas mange-t-il le midi</label>
+				
+				<div class="col-sm-3">
+				<select class="form-select col-sm-3 bg-light" aria-label="Default select example" id="diner" name="diner">
+					  
+					  <option value="Maison">Maison</option>
+					  <option selected value="Ecole">École</option>
+					  
+				</select>
+				</div>
+			</div>
+			
+			<div class="row">
+				<label for="transport" class="col-sm-3 col-form-label">Transport scolaire</label>
+			    <div class="col-sm-3">
+			      <select class="form-select col-sm-3 bg-light" aria-label="Default select example" id="transport" name="transport">
+					  
+					  <option value="oui">Oui</option>
+					  <option selected value="non">Non</option>
+					  
+				</select>
+			    </div>
+			</div>
+			
+			<div class="row">
+				<label for="garderie" class="col-sm-3 col-form-label">Service de garde (groupe)</label>
+			    <div class="col-sm-3">
+			      <select class="form-select col-sm-3 bg-light" aria-label="Default select example" id="garderie" name="garderie">
+					  
+					  <option selected value="oui">Oui</option>
+					  <option value="non">Non</option>
+					  
+				</select>
+			    </div>
+			</div>
+			
+			<div class="row">
+				<label for="parascolaire" class="col-sm-3 col-form-label">Activités parascolaires</label>
+			    <div class="col-sm-3">
+			      <select class="form-select col-sm-3 bg-light" aria-label="Default select example" id="parascholair" name="parascolaire">
+					  
+					  <option value="oui">Oui</option>
+					  <option selected value="non">Non</option>
+					  
+				</select>
+			    </div>
+			</div>
+			
+			<div class="row">
+				<label for="groupe_amis" class="col-sm-3 col-form-label">Groupe d'amis réguliers</label>
+			    <div class="col-sm-3">
+			      <select class="form-select col-sm-3 bg-light" aria-label="Default select example" id="groupe_amis" name="groupe_amis">
+					  
+					  <option selected value="oui">Oui</option>
+					  <option value="non">Non</option>
+					  
+				</select>
+			    </div>
+			</div>
+			
+			<div class="row">
+				<label for="service" class="col-sm-3 col-form-label">Reçoit service spécialisé</label>
+			    <div class="col-sm-3">
+			      <select class="form-select col-sm-3 bg-light" aria-label="Default select example" id="service" name="service">
+					  
+					  <option value="oui">Oui</option>
+					  <option selected value="non">Non</option>
+					  
+				</select>
+			    </div>
+			</div>
+			
+			<div class="row">
+				<label for="voiturage" class="col-sm-3 col-form-label">Co-voiturage</label>
+			    <div class="col-sm-3">
+			      <select class="form-select col-sm-3 bg-light" aria-label="Default select example" id="voiturage" name="voiturage">
+					  
+					  <option value="oui">Oui</option>
+					  <option selected value="non">Non</option>
+					  
+				</select>
+
+			    </div>
+			</div>
+			
+			<div class="row">
+				<label for="sport-etude" class="col-sm-3 col-form-label">Sport-étude</label>
+			    <div class="col-sm-3">
+			      <select class="form-select col-sm-3 bg-light" aria-label="Default select example" id="sport-etude" name="sport-etude">
+					  
+					  <option value="oui">Oui</option>
+					  <option selected value="non">Non</option>
+					  
+				</select>
+
+			    </div>
+			</div>
+			
+			<div class="row">
+				<label for="equipe_sportive" class="col-sm-3 col-form-label">Équipe sportive</label>
+			    <div class="col-sm-3">
+			      <select class="form-select col-sm-3 bg-light" aria-label="Default select example" id="equipe_sportive" name="equipe_sportive">
+					  
+					  <option value="oui">Oui</option>
+					  <option selected value="non">Non</option>
+					  
+				</select>
+			    </div>
+			</div>
+	
+		
+	
+			<div class="row">
+			    <div class="col-sm-6">
+			      <h4>Élèves à risque modéré (Classe)</h4>
+			    </div>
+			</div>
+			<div class='row'>
+				<div class='col-sm-6'>
+					<label for="class_mate_list" class="form-label">Selection (cmd + click)</label>
+					<select class="form-select bg-light border" name="class_mate_list" id="class_mate_list" multiple aria-label="multiple select example" size={{nombre_de_collegue}} multiple>
+					
+					{% if class_mate_list %}
+						{% for row in class_mate_list %}
+								<option value="{{ row.id }}">{{ row.nom }}, {{ row.prénom }}</option>
+						{% endfor %}
+					{% endif %}
+				</select>
+			</div>
+		</div>			
+		<div class="row">
+			    <div class="col-sm-6">
+			      <button class="btn btn-primary" type="submit" value="Submit">Valider</button>
+			    </div>
+			</div>
+		
+		</form>
+	</div>
+			
+{% endblock %}

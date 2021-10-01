@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<!--- JQUERY -->
+		<link rel="stylesheet" type="text/css" href="{% static 'extract/css/jquery_theme.css' %}"> 
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+		
+		<!--- BOOTSTRAP -->
+		{# Load the tag library #}
+		{% load django_bootstrap5 %}
+		{# Load CSS and JavaScript #}
+		{% bootstrap_css %}
+		{% bootstrap_javascript %}
+		{# Display django.contrib.messages as Bootstrap alerts #}
+		{% bootstrap_messages %}
+		<!--- GOOGLE FONT -->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cinzel">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Halant">
+		<!--- FONT AWSOME-->
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+		<!--- BLOCK CSS -->
+		{% block extrahead %}{% endblock %}
+		
+		
+		{% block title2 %}{% endblock %}		
+		<title>{% block title %}{% endblock %}</title>
+		
+		
+		
+	</head>
+	<body>
+		<div class="container">
+			<!--- BEGINNING OF NAVBAR -->
+			{% include "nav_bar.html" %}
+			<!--- END OF NAVBAR -->
+			
+			{% block content %}{% endblock %}
+				
+			<footer class="page-footer text-center w-100">
+			<!-- Copyright -->
+					<!--© 2021 Copyright:Louis-Philippe David-->
+			</footer>
+		</div>
+		
+				
+		{% block js %}{% endblock %}
+	
+	</body>
+</html>

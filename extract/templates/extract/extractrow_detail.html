@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+
+
+	
+
+
+{% block title %} Liste des Éleves {% endblock %}
+
+{% block title2 %} <link rel="stylesheet" type="text/css" href="{% static 'extract/css/base.css' %}"> {% endblock %}
+
+{% block content %}
+	<div class="container general">
+	
+		<div class="container">
+			<div class='row'>
+				<div class='col-sm-2 bg-primary text-center text-white'>
+					Eleve symptomatique
+				</div>
+			</div>
+			<div class='row'>
+				<div class='col-sm-2'>
+					<table class="table">
+						<tr><td>Prénom :</td><td>{{extract_details.prénom}}</td></tr>
+						<tr><td>Nom :</td><td>{{extract_details.nom}}</td></tr>
+						<tr><td>Groupe :</td><td>{{extract_details.groupe}}</td></tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		
+		<div class="container">
+			<div class='row'>
+				<div class='col-sm-6 bg-primary text-center text-white'>
+					Frère et soeur
+				</div>
+			</div>
+			<div class='row'>
+				{% if sibblings %}
+					<div class='col-sm-6'>
+						<table class="table">
+							<thead>
+								<th>Prénom</th>
+								<th>Nom</th>
+								<th>Groupe</th>
+							</thead>
+							{% for row in sibblings %}
+								<tr>
+									<td>{{row.prénom}}</td>
+									<td>{{row.nom}}</td>
+									<td>{{row.groupe}}</td>
+								</tr>
+							{% endfor %}
+						</table>
+					</div>
+				{% else %}
+					<div class='col-sm-6 text-center text-danger'>
+						Pas de fraterie
+					</div>
+				{% endif %}
+			</div>
+		</div>
+		
+		<div class="container groupe_table">
+			<div class='row'>
+				<div class='col-sm-12 bg-primary text-center text-white'>
+					Classe {{extract_details.groupe}}
+				</div>
+			</div>
+			<div class='row'>
+				<div class='col-sm-12'>
+					<table class="table align-middle">
+						<thead>
+							<th>Select</th>
+							<th>Nom et Prénom</th>
+							<th>Selon les informations disponibles, cette personne est-elle protégée ou non-protégée ?</th>
+							<th>Date de naissance</th>
+							<th>Groupe ou nom du cours</th>
+							<th>Contact avisé par l'école oui/non</th>
+							<th>Nom du parent (si le contact est un élève)</th>
+							<th>Numéro(s) de  téléphone</th>
+							<th>Courriel</th>
+							<th>Langue</th>
+						</thead>
+						{% if class_mate %}
+							<form action="generate_excel" method="post">
+								{% csrf_token %}
+								
+								{% for row in class_mate %}
+								<tr>
+									<td>
+										<div class="form-check">
+											<input class="form-check-input" type="checkbox" value={{row.id}} id="friend_number_{{row.id}}" checked>
+										</div>
+									</td>
+									<td>{{row.nom}}, {{row.prénom}}</td>
+									<td>{{row.vacciné}}</td>
+									<td>{{row.dob}}</td>
+									<td>{{row.groupe}}</td>
+									<td>{{row.avisé}}</td>
+									<td>{{row.nom_tuteur}}, {{row.prénom_tuteur}}</td>
+									<td><a href='tel:{{row.tel}}'>{{row.tel}}</a></td>
+									<td><a href='mailto:{{row.courriel}}'>{{row.courriel}}</a></td>
+									<td>{{row.langue}}</td>
+									
+									
+								</tr>
+							{% endfor %}
+								<input type="submit" value="OK">
+							</form>
+						{% endif %}
+					</table>
+				</div>
+			</div>
+		</div>
+		
+			
+		<script type="text/javascript">
+			  $(document).ready(
+				    function(){
+				      $("#jqtest").html("JQuery installed successfully!");
+				    }
+			  );
+		</script>
+		<p id="jqtest"></p>
+		
+		
+			
+{% endblock %}
