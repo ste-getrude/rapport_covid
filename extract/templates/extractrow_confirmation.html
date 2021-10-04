@@ -7,7 +7,7 @@
 {% block extrahead %}
 	<link rel="stylesheet" type="text/css" href="{% static 'extract/css/base.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'extract/css/add_remove_round_buttons.css' %}">
-	<script src="{% static 'extract/js/add_remove_field.js' %}"> </script> 
+	<script src="{% static 'extract/js/add_remove.js' %}"> </script> 
 {% endblock %}
 
 {% block content %}
@@ -293,13 +293,46 @@
 					{% endif %}
 				</select>
 			</div>
-		</div>			
+		</div>	
+		
+		
+		<div class="row">
+		    <div class="col-sm-6">
+		      <h4>Élèves à risque modéré (Autre)</h4>
+		    </div>
+		</div>
+		
+		<div class="col form_field_outer">
+			<div class="row form_field_outer_row">
+			
+				<div class="form-group col-sm-6">
+					<div class='col-sm-6 border'>	
+						<input type="text" class="search-box form-control" name="search-box[]" id="search-box_no_1"  placeholder="Nom de l'élève" />
+						<div class="suggesstion-box" name="suggesstion-box_no_[]" id="suggesstion-box_no_1"></div>
+						<input type="hidden"  name="student_Id_no_1" class="hidden_student_id" id="student_Id_no_1" value="N/A">
+					</div>
+				</div>
+				
+				<div class="form-group col-md-2 add_del_btn_outer">
+					
+		            <button type="button" class="btn_round add_new_frm_field_btn" title="Copy or clone this row">
+		            	<i class="fas fa-copy"></i>
+		            </button>
+		            <button type="button" class="btn_round remove_node_btn_frm_field" disabled>
+		            	<i class="fas fa-trash-alt"></i>
+		            </button>
+			         
+	            </div>
+	            
+			</div>
+		</div>
+			
 		<div class="row">
 			    <div class="col-sm-6">
 			      <button class="btn btn-primary" type="submit" value="Submit">Valider</button>
 			    </div>
 			</div>
-		
+			
 		</form>
 	</div>
 			

@@ -134,7 +134,11 @@ def excel_view(request):
         context['symtomes_list'] = ', '.join(request.POST.getlist('symptom_list'))
         context['risque_modere'] = request.POST.getlist('class_mate_list')
         
+        autre_risque_modere_id_list = []
         
+        for k , v in request.POST.items():
+            if k.__contains__('student_Id_no_') and v!='N/A':
+                autre_risque_modere_id_list.append(v)
         
         
         response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
@@ -198,8 +202,10 @@ def excel_view(request):
            
         ws_contacts = wb['Contacts à risque modéré']
         
+        liste_risque_modere = autre_risque_modere_id_list + request.POST.getlist('class_mate_list')
+        
         row_number = 6
-        for student_data_dict in ExtractRow.objects.filter(id__in=request.POST.getlist('class_mate_list')).values():
+        for student_data_dict in ExtractRow.objects.filter(id__in=liste_risque_modere).values():
             ws_contacts.cell(column=2, row=row_number, value=student_data_dict["nom"] + ", " + student_data_dict["prénom"])
             ws_contacts.cell(column=3, row=row_number, value=student_data_dict["vacciné"])
             ws_contacts.cell(column=4, row=row_number, value=student_data_dict["dob"])
