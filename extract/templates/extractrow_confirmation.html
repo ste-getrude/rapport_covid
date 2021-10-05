@@ -120,7 +120,7 @@
 			<div class="row">
 				<label for="apparition_symptômes" class="col-sm-3 col-form-label">Date d'apparition des symptômes</label>
 			    <div class="col-sm-3">
-			      <input type="date" class="form-control bg-light" id="apparition_symptômes" name="apparition_symptômes">
+			      <input type="date" class="form-control bg-light" id="apparition_symptômes" name="apparition_symptômes" required="required">
 			      	
 			      
 			    </div>
@@ -130,7 +130,7 @@
 				<div class='col-sm-6'>
 					<label for="symptom_list" class="form-label">Symptomes</label>
 					
-					<select class="form-select bg-light border" id="symptom_list" name="symptom_list" multiple aria-label="multiple select example" size='13' multiple>
+					<select class="form-select bg-light border" id="symptom_list" name="symptom_list" multiple aria-label="multiple select example" size='13' multiple required="required">
 						{% for sympt in symptoms_list %}
 							<option value="{{ sympt }}">{{ sympt }}</option>
 						{% endfor %}
@@ -142,7 +142,7 @@
 			<div class="row">
 				<label for="passation_test" class="col-sm-3 col-form-label">Date de passation du test</label>
 			    <div class="col-sm-3">
-			      <input type="date" class="form-control bg-light" id="passation_test" name="passation_test">
+			      <input type="date" class="form-control bg-light" id="passation_test" name="passation_test" required="required">
 			    </div>
 			</div>
 			
@@ -155,21 +155,21 @@
 			<div class="row">
 				<label for="date_1" class="col-sm-3 col-form-label">Date jour 1</label>
 			    <div class="col-sm-3">
-			      <input type="date" class="form-control bg-light" id="date_1" name="date_1">
+			      <input type="date" class="form-control bg-light" id="date_1" name="date_1" required="required">
 			    </div>
 			</div>
 			
 			<div class="row">
 				<label for="date_2" class="col-sm-3 col-form-label">Date jour 2</label>
 			    <div class="col-sm-3">
-			      <input type="date" class="form-control bg-light" id="date_2" name="date_2">
+			      <input type="date" class="form-control bg-light" id="date_2" name="date_2" required="required">
 			    </div>
 			</div>
 			
 			<div class="row">
 				<label for="date_3" class="col-sm-3 col-form-label">Date jour 3</label>
 			    <div class="col-sm-3">
-			      <input type="date" class="form-control bg-light" id="date_3" name="date_3">
+			      <input type="date" class="form-control bg-light" id="date_3" name="date_3" required="required">
 			    </div>
 			</div>
 			<div class="row">
