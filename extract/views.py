@@ -135,17 +135,19 @@ def excel_view(request):
         context['risque_modere'] = request.POST.getlist('class_mate_list')
         
         autre_risque_modere_id_list = []
-        
         for k , v in request.POST.items():
             if k.__contains__('student_Id_no_') and v!='N/A':
                 autre_risque_modere_id_list.append(v)
         
+        liste_risque_modere = autre_risque_modere_id_list + request.POST.getlist('class_mate_list')
+        nombre_de_risque_modere =str(len(liste_risque_modere))
         
         response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
         response['Content-Disposition'] = 'attachment; filename=' + request.POST['child_last_name'] + '_' + request.POST['child_first_name'] + '_école Sainte-Gertrude-gr.' + request.POST['child_groupe'] + '.xlsx'
         
         BASE_DIR = Path(__file__).resolve().parent.parent
         wb = openpyxl.load_workbook(os.path.join(BASE_DIR, 'extract/data/template_covid.xlsx'))
+        
         ws_id_cas = wb['Identification du cas']
         
         
@@ -164,10 +166,10 @@ def excel_view(request):
                                              "Présence de fratrie(s) dans l'école ? (nom, prénom, numéro(s) de groupe) Fratrie #1 :" : request.POST["sibbling_1"],
                                              "Présence de fratrie(s) dans l'école ? (nom, prénom, numéro(s) de groupe) Fratrie #2 :" : request.POST["sibbling_2"],
                                              "Présence de fratrie(s) dans l'école ? (nom, prénom, numéro(s) de groupe) Fratrie #3 :" : request.POST["sibbling_3"],
-                                             "Date de passation du test :" : "à fournir",
+                                             "Date de passation du test :" : request.POST["passation_test"],
                                              "Date jour 1 (aaaa-mm-jj)  :" : request.POST['date_1'],
-                                             'Date jour 2 (aaaa-mm-jj)\xa0:' : request.POST['date_2'],
-                                             "Date jour 3 (aaaa-mm-jj) : \n(dernier jour fréquenté par l'élève)" : request.POST['date_3']
+                                             "Date jour 2 (aaaa-mm-jj)  :" : request.POST['date_2']
+                                             
                                             }
 
         champs_situation_dans_milieu_dict = {'Numéro du groupe/nom du programme : ' : request.POST['child_groupe'],
@@ -188,7 +190,8 @@ def excel_view(request):
                                                  "Coordonnées de la personne-ressource (numéro de téléphone et courriel) :" : "514-328-3566 + genevieve-poitras@csspi.gouv.qc.ca",
                                                  "Type de ventilation: \nmécanique / fenêtres / dispositif de filtration / échangeur d'air / inconnu" : "Fenêtre",
                                                  "Nombre de contacts à risque modéré" : "",
-                                                 "Nombre de contacts à risque faible (approximativement)" : ""
+                                                 "Nombre de contacts à risque faible (approximativement)" : "",
+                                                 "Nombre de contacts à risque modéré" : nombre_de_risque_modere
                                                 }
         
         
@@ -199,10 +202,13 @@ def excel_view(request):
         for infos in infos_list:
             write_to_identification_du_cas(infos, ws_id_cas)
         
+        ws_id_cas['C23'] = request.POST['date_2']    
+        ws_id_cas['C24'] = request.POST['date_3']
+        
            
         ws_contacts = wb['Contacts à risque modéré']
         
-        liste_risque_modere = autre_risque_modere_id_list + request.POST.getlist('class_mate_list')
+        
         
         row_number = 6
         for student_data_dict in ExtractRow.objects.filter(id__in=liste_risque_modere).values():

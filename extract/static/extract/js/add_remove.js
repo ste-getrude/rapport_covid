@@ -47,18 +47,18 @@ function selectSudent1(student_name, student_id) {
 
 
 
-$(document).ready(function(){ $("body").on("click",".add_new_frm_field_btn", function (){ console.log("cliked"); var index = $(".form_field_outer").find(".form_field_outer_row").length + 1; $(".form_field_outer").append(`
+$(document).ready(function(){ $("body").on("click",".add_new_frm_field_btn", function (){ console.log("clicked"); var index = $(".form_field_outer").find(".form_field_outer_row").length + 1; $(".form_field_outer").append(`
 <div class="row form_field_outer_row">
 
-	<div class="form-group col-sm-6">
-		<div class='col-sm-6 border'>	
-			<input type="text" class="search-box form-control" name="search-box[${student_id}]" id="search-box_no_` + index + `" placeholder="Nom de l'élève" />
+	<div class="form-group col">
+		<div class='col border'>	
+			<input type="text" class="search-box form-control" name="search-box[]" id="search-box_no_` + index + `" placeholder="Nom de l'élève" />
 			<div class="suggesstion-box" name="suggesstion-box_no" id="suggesstion-box_no_` + index + `"></div>
 			<input type="hidden"  name="student_Id_no_` + index + `" class="hidden_student_id" id="student_Id_no_` + index + `" value="N/A">
 		</div>
 	</div>
 	
-	<div class="form-group col-md-2 add_del_btn_outer">
+	<div class="form-group col add_del_btn_outer">
 		
         <button type="button" class="btn_round add_new_frm_field_btn" title="Copy or clone this row">
         	<i class="fas fa-copy"></i>

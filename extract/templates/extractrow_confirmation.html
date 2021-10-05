@@ -12,7 +12,7 @@
 
 {% block content %}
 	<div class="container general gap-3">
-		
+		<fieldset>
 		<div class="row">
 		    <div class="col-sm-6">
 		      <h4>Information sur le cas</h4>
@@ -32,8 +32,24 @@
 					<tr><td>Prénom :</td><td>{{student_info.prénom}}</td></tr>
 					<tr><td>Nom :</td><td>{{student_info.nom}}</td></tr>
 					<tr><td>Date de naissance :</td><td>{{student_info.dob}}</td></tr>
-					<tr><td>Téléphone :</td><td>{{student_info.tel}}</td></tr>
-					<tr><td>Groupe :</td><td>{{student_info.groupe}}</td></tr>
+				</table>
+			</div>
+		</div>
+		
+		<div class='row'>
+			<div class='col-sm-6'>
+				<p>Tuteur</p>
+			</div>
+		</div>
+		
+		<div class='row'>
+			<div class='col-sm-6'>
+				<table class="table bg-light border">
+					<tr><td>Prénom :</td><td>{{student_info.prénom_tuteur}}</td></tr>
+					<tr><td>Nom :</td><td>{{student_info.nom_tuteur}}</td></tr>
+					<tr><td>Téléphone :</td><td><a href='tel:'{{student_info.tel}}>{{student_info.tel}}</a></td></tr>
+					<tr><td>Courriel :</td><td><a href='mailto:'{{student_info.courriel}}>{{student_info.courriel}}</a></td></tr>
+					<tr><td>Langue :</td><td>{{student_info.langue}}</td></tr>
 					
 				</table>
 			</div>
@@ -305,15 +321,15 @@
 		<div class="col form_field_outer">
 			<div class="row form_field_outer_row">
 			
-				<div class="form-group col-sm-6">
-					<div class='col-sm-6 border'>	
+				<div class="form-group col">
+					<div class='col border'>	
 						<input type="text" class="search-box form-control" name="search-box[]" id="search-box_no_1"  placeholder="Nom de l'élève" />
 						<div class="suggesstion-box" name="suggesstion-box_no_[]" id="suggesstion-box_no_1"></div>
 						<input type="hidden"  name="student_Id_no_1" class="hidden_student_id" id="student_Id_no_1" value="N/A">
 					</div>
 				</div>
 				
-				<div class="form-group col-md-2 add_del_btn_outer">
+				<div class="form-group col add_del_btn_outer">
 					
 		            <button type="button" class="btn_round add_new_frm_field_btn" title="Copy or clone this row">
 		            	<i class="fas fa-copy"></i>
