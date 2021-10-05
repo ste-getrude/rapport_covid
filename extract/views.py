@@ -97,7 +97,8 @@ def confirmation_view(request):
                         "nausées",
                         "vomissements",
                         "diarrhée",
-                        "maux de ventre"]
+                        "maux de ventre",
+                        "Aucun"]
         
         context['student_info'] = student_info
         context['symptoms_list'] = symptoms_list
