@@ -143,11 +143,16 @@ def excel_view(request):
         liste_risque_modere = autre_risque_modere_id_list + request.POST.getlist('class_mate_list')
         nombre_de_risque_modere =str(len(liste_risque_modere))
         
+        risque_diner_non_isole_list = []
+        for k , v in request.POST.items():
+            if k.__contains__('student_Id_new_no_') and v!='N/A':
+                risque_diner_non_isole_list.append(v)
+        
         response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
         response['Content-Disposition'] = 'attachment; filename=' + request.POST['child_last_name'] + '_' + request.POST['child_first_name'] + '_école Sainte-Gertrude-gr.' + request.POST['child_groupe'] + '.xlsx'
         
         BASE_DIR = Path(__file__).resolve().parent.parent
-        wb = openpyxl.load_workbook(os.path.join(BASE_DIR, 'extract/data/template_covid.xlsx'))
+        wb = openpyxl.load_workbook(os.path.join(BASE_DIR, 'extract/data/GABARIT_DES_CONTACTS_SCOLAIRES_2021-10-14_VF.xlsx'))
         
         ws_id_cas = wb['Identification du cas']
         
@@ -209,19 +214,33 @@ def excel_view(request):
            
         ws_contacts = wb['Contacts à risque modéré']
         
-        
-        
         row_number = 6
         for student_data_dict in ExtractRow.objects.filter(id__in=liste_risque_modere).values():
-            ws_contacts.cell(column=2, row=row_number, value=student_data_dict["nom"] + ", " + student_data_dict["prénom"])
-            ws_contacts.cell(column=3, row=row_number, value=student_data_dict["vacciné"])
-            ws_contacts.cell(column=4, row=row_number, value=student_data_dict["dob"])
-            ws_contacts.cell(column=5, row=row_number, value=student_data_dict["groupe"])
-            ws_contacts.cell(column=6, row=row_number, value=student_data_dict["avisé"])
-            ws_contacts.cell(column=7, row=row_number, value=student_data_dict["nom_tuteur"] + ", " + student_data_dict["prénom_tuteur"])
-            ws_contacts.cell(column=8, row=row_number, value=student_data_dict["tel"])
-            ws_contacts.cell(column=9, row=row_number, value=student_data_dict["courriel"])
-            ws_contacts.cell(column=10, row=row_number, value=student_data_dict["langue"])
+            ws_contacts.cell(column=3, row=row_number, value=student_data_dict["nom"] + ", " + student_data_dict["prénom"])
+            ws_contacts.cell(column=4, row=row_number, value=student_data_dict["vacciné"])
+            ws_contacts.cell(column=5, row=row_number, value=student_data_dict["dob"])
+            ws_contacts.cell(column=6, row=row_number, value=student_data_dict["groupe"])
+            ws_contacts.cell(column=7, row=row_number, value=student_data_dict["avisé"])
+            ws_contacts.cell(column=8, row=row_number, value=student_data_dict["nom_tuteur"] + ", " + student_data_dict["prénom_tuteur"])
+            ws_contacts.cell(column=9, row=row_number, value=student_data_dict["tel"])
+            ws_contacts.cell(column=10, row=row_number, value=student_data_dict["courriel"])
+            ws_contacts.cell(column=11, row=row_number, value=student_data_dict["langue"])
+            
+            row_number +=1
+            
+        ws_contacts_diner = wb['modéré sans isolement']
+        
+        row_number = 6
+        for student_data_dict in ExtractRow.objects.filter(id__in=risque_diner_non_isole_list).values():
+            ws_contacts_diner.cell(column=3, row=row_number, value=student_data_dict["nom"] + ", " + student_data_dict["prénom"])
+            ws_contacts_diner.cell(column=4, row=row_number, value=student_data_dict["vacciné"])
+            ws_contacts_diner.cell(column=5, row=row_number, value=student_data_dict["dob"])
+            ws_contacts_diner.cell(column=6, row=row_number, value=student_data_dict["groupe"])
+            ws_contacts_diner.cell(column=7, row=row_number, value=student_data_dict["avisé"])
+            ws_contacts_diner.cell(column=8, row=row_number, value=student_data_dict["nom_tuteur"] + ", " + student_data_dict["prénom_tuteur"])
+            ws_contacts_diner.cell(column=9, row=row_number, value=student_data_dict["tel"])
+            ws_contacts_diner.cell(column=10, row=row_number, value=student_data_dict["courriel"])
+            ws_contacts_diner.cell(column=11, row=row_number, value=student_data_dict["langue"])
             
             row_number +=1
         

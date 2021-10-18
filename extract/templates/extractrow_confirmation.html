@@ -8,6 +8,7 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'extract/css/base.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'extract/css/add_remove_round_buttons.css' %}">
 	<script src="{% static 'extract/js/add_remove.js' %}"> </script> 
+	<script src="{% static 'extract/js/add_remove_new_field.js' %}"> </script> 
 {% endblock %}
 
 {% block content %}
@@ -130,7 +131,7 @@
 				<div class='col-sm-6'>
 					<label for="symptom_list" class="form-label">Symptomes</label>
 					
-					<select class="form-select bg-light border" id="symptom_list" name="symptom_list" multiple aria-label="multiple select example" size='14' multiple required="required">
+					<select class="form-select bg-light border" id="symptom_list" name="symptom_list" multiple aria-label="multiple select example" size='14' multiple>
 						{% for sympt in symptoms_list %}
 							<option value="{{ sympt }}">{{ sympt }}</option>
 						{% endfor %}
@@ -342,6 +343,38 @@
 	            
 			</div>
 		</div>
+		
+		
+		<div class="row">
+		    <div class="col-sm-6">
+		      <h4>Contacts facilement identifiable lors de la période des repas</h4>
+		    </div>
+		</div>
+		
+		<div class="form_field_outer_new">
+			<div class="row form_field_outer_row_new">
+			
+				<div class="form-group col">
+					<div class='col border'>	
+						<input type="text" class="search-box_new form-control" name="search-box_new[]" id="search-box_new_no_1"  placeholder="Nom de l'élève" />
+						<div class="suggesstion-box_new" name="suggesstion-box_new_no_[]" id="suggesstion-box_new_no_1"></div>
+						<input type="hidden"  name="student_Id_new_no_1" class="hidden_student_id_new" id="student_Id_new_no_1" value="N/A">
+					</div>
+				</div>
+				
+				<div class="form-group col add_del_btn_outer_new">
+		            <button type="button" class="btn_round add_new_frm_field_btn_new" title="Copy or clone this row">
+		            	<i class="fas fa-copy"></i>
+		            </button>
+		            <button type="button" class="btn_round remove_node_btn_frm_field_new" disabled>
+		            	<i class="fas fa-trash-alt"></i>
+		            </button>
+	            </div>
+	            
+			</div>
+		</div>
+		
+		
 			
 		<div class="row">
 			    <div class="col-sm-6">
