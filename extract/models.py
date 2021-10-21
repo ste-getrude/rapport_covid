@@ -13,6 +13,8 @@ class ExtractRow(models.Model):
     tel = models.CharField(max_length=200) 
     courriel = models.CharField(max_length=200)   
     langue = models.CharField(max_length=200)
+    sex = models.CharField(max_length=15, blank=True)
+    adresse = models.CharField(max_length=100, blank=True)
     
     def __str__(self):
         return f"{self.nom}, {self.prénom}, {self.groupe}"
