@@ -163,9 +163,9 @@ def excel_view(request):
         champ_information_sur_le_cas_dict = {"Nom :" : request.POST['child_last_name'], 
                                              "Prénom :" : request.POST['child_first_name'], 
                                              "Date de naissance :" : request.POST['child_dob'],
-                                             "Sexe :" : 'N/A',
+                                             "Sexe :" : request.POST['sex'],
                                              'Numéro de téléphone :' : request.POST['child_phone'],
-                                             "Adresse complète :" : 'N/A',
+                                             "Adresse complète :" : request.POST['adresse'],
                                              "Date d'apparition des symptômes :" : request.POST["apparition_symptômes"],
                                              "Énumérer les symptômes, si connus : " : ', '.join(request.POST.getlist('symptom_list')),
                                              "Numéro du groupe/nom du programme : " : request.POST['child_groupe'],
@@ -306,7 +306,9 @@ def mise_a_jour_script(request):
                                    prénom_tuteur = row[5].split(',')[1].strip(), 
                                    tel = row[6][:14], 
                                    courriel = row[7], 
-                                   langue = row[8])
+                                   langue = row[8],
+                                   sex = row[9],
+                                   adresse = row[10])
                         t.save()
                     except:
                         error_msg_list.append('Un probème s\'est produit à la ligne ' + str(k))

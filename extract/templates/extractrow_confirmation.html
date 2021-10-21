@@ -33,6 +33,8 @@
 					<tr><td>Prénom :</td><td>{{student_info.prénom}}</td></tr>
 					<tr><td>Nom :</td><td>{{student_info.nom}}</td></tr>
 					<tr><td>Date de naissance :</td><td>{{student_info.dob}}</td></tr>
+					<tr><td>Sexe :</td><td>{{student_info.sex}}</td></tr>
+					<tr><td>Adresse :</td><td>{{student_info.adresse}}</td></tr>
 				</table>
 			</div>
 		</div>
@@ -95,6 +97,8 @@
 				
 			<input type="hidden" name="child_first_name" value="{{student_info.prénom}}"/>
 			<input type="hidden" name="child_last_name" value="{{student_info.nom}}"/>
+			<input type="hidden" name="sex" value="{{student_info.sex}}"/>
+			<input type="hidden" name="adresse" value="{{student_info.adresse}}"/>
 			<input type="hidden" name="child_groupe" value="{{student_info.groupe}}"/>
 			<input type="hidden" name="child_dob" value="{{student_info.dob}}"/>
 			<input type="hidden" name="child_phone" value="{{student_info.tel}}"/>
